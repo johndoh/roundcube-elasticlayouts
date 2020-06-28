@@ -1,0 +1,25 @@
+{
+  "name": "johndoh/elasticlayouts",
+  "description": "Add support for desktop and list layouts to Elastic skin",
+  "keywords": ["list","layout"],
+  "homepage": "https://github.com/johndoh/roundcube-elasticlayouts/",
+  "license": "GPL-3.0",
+  "type": "roundcube-plugin",
+  "version": "0.1",
+  "authors": [
+    {
+      "name": "Philip Weir",
+      "email": "roundcube@tehinterweb.co.uk",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=5.2.1",
+    "roundcube/plugin-installer": ">=0.1.2"
+  },
+  "extra": {
+    "roundcube": {
+      "min-version": "1.5-dev"
+    }
+  }
+}

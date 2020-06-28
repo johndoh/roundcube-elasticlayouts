@@ -1,0 +1,306 @@
+/**
+ * Elastic Layouts list widget styles
+ */
+
+.listing {
+    > thead {
+        background-color: @color-list-header-background;
+    }
+
+    thead th {
+        border-bottom: 1px solid @color-list-border;
+        cursor: default;
+        font-weight: normal;
+        line-height: @listing-line-height;
+    }
+
+    thead th {
+        padding: .25rem .5rem;
+        white-space: nowrap;
+        vertical-align: middle;
+        font-weight: bold;
+        color: @color-list-header;
+        .overflow-ellipsis;
+        outline: none;
+
+        a {
+            color: @color-list-header;
+
+            &:hover {
+                text-decoration: none;
+            }
+        }
+
+        &.sortedDESC,
+        &.sortedASC, {
+            > a:after {
+                &:extend(.font-icon-class);
+                float: none;
+                display: inline-block;
+                margin-left: .1em;
+                font-size: .9rem;
+                color: @color-list-header-icon;
+                content: @fa-var-long-arrow-alt-up;
+            }
+        }
+
+        &.sortedASC > a:after {
+            content: @fa-var-long-arrow-alt-down;
+        }
+    }
+
+    th.selection > input {
+        display: none;
+    }
+
+    &:not(.withselection) th.selection {
+        display: none;
+    }
+}
+
+table.fixedcopy {
+    display: table;
+}
+
+.messagelist.layout-list > thead {
+    display: table-header-group;
+}
+
+.messagelist .branch {
+    display: block;
+    float: left;
+}
+
+.messagelist {
+    th {
+        border-left: 0;
+        width: 2em;
+        vertical-align: top;
+        font-size: 1rem !important;
+    }
+
+    th {
+        &.threads,
+        &.flag,
+        &.attachment,
+        &.status,
+        &.priority {
+            text-indent: -999px;
+            white-space: nowrap;
+            overflow: hidden;
+            width: 2.5em;
+        }
+
+        &.threads a:before {
+            &:extend(.font-icon-class);
+            content: @fa-var-columns;
+            height: auto;
+            text-indent: 0;
+        }
+
+        &.flag,
+        &.attachment {
+            span:before {
+                color: @color-list-header !important;
+            }
+        }
+
+        &.status span:before {
+            .font-icon-solid(@fa-var-envelope);
+        }
+
+        &.fromto,
+        &.from,
+        &.to,
+        &.cc,
+        &.replyto {
+            width: 15em;
+        }
+
+        &.date {
+            width: 11em;
+        }
+
+        &.size {
+            width: 4em;
+        }
+
+        &.subject {
+            width: 99%;
+        }
+    }
+
+    td.subject {
+        .layout-list& {
+            width: auto;
+            display: table-cell;
+        }
+    }
+
+    tr.flagged td.subject > a {
+        color: @color-list-flagged;
+    }
+
+    tr.deleted td.subject > a {
+        color: @color-list-deleted;
+    }
+
+
+    td.subject span.msgicon {
+        &:before {
+            .layout-list& {
+                margin-top: .2rem;
+            }
+        }
+
+        &.status:before {
+            cursor: pointer;
+        }
+    }
+
+    th.attachment,
+    td.attachment,
+    span.attachment {
+        span {
+            &:before {
+                &:extend(.font-icon-class);
+                color: @color-list-icon;
+
+                margin: 0;
+                content: @fa-var-paperclip;
+
+                .layout-list& {
+                    height: auto;
+                    text-indent: 0;
+                }
+            }
+            &.report:before {
+                .font-icon-regular(@fa-var-file-alt);
+            }
+            &.encrypted:before {
+                content: @fa-var-lock;
+            }
+            &.vcard:before {
+                .font-icon-regular(@fa-var-user); // vcard_attachments plugin
+            }
+        }
+    }
+
+    th.flag span,
+    td.flag span,
+    tr.flaggedroot:not(:hover) td.flag span,
+    span.flag span {
+        &:before {
+            &:extend(.font-icon-class);
+            .font-icon-regular(@fa-var-flag);
+            color: transparent;
+
+            .layout-list& {
+                height: auto;
+                text-indent: 0;
+            }
+        }
+
+        &.flagged:before {
+            .font-icon-solid(@fa-var-flag);
+            color: @color-list-flagged;
+        }
+    }
+
+    tr.flaggedroot:not(:hover) td.flag span.unflagged:before {
+        .font-icon-solid(@fa-var-flag);
+        color: @color-list-icon;
+    }
+
+    td.status span,
+    span.status {
+        &:before {
+            &:extend(.font-icon-class);
+            .font-icon-regular(@fa-var-envelope-open);
+
+            .layout-list& {
+                height: auto;
+                text-indent: 0;
+            }
+        }
+
+        &.unread:before {
+            .font-icon-solid(@fa-var-envelope);
+            color: @color-list-unread-status !important;
+        }
+    }
+
+    td.status span {
+        color: transparent;
+    }
+
+    td.priority span,
+    span.priority {
+        &:before {
+            &:extend(.font-icon-class);
+            content: @fa-var-exclamation;
+
+            .layout-list& {
+                height: auto;
+                text-indent: 0;
+            }
+        }
+
+        &.prio1:before {
+            content: @fa-var-exclamation;
+            color: @color-list-priority-1;
+        }
+
+        &.prio2:before {
+            content: @fa-var-long-arrow-alt-up;
+            color: @color-list-priority-2;
+        }
+
+        &.prio3:before {
+            content: @fa-var-arrows-alt-v;
+            color: @color-list-priority-3;
+        }
+
+        &.prio4:before {
+            content: @fa-var-long-arrow-alt-down;
+            color: @color-list-priority-4;
+        }
+
+        &.prio5:before {
+            content: @fa-var-long-arrow-alt-down;
+            color: @color-list-priority-5;
+        }
+    }
+
+    tr:hover {
+        td.status span,
+        span.unflagged {
+            &:before {
+                color: @color-list-icon;
+                cursor: pointer;
+            }
+        }
+
+        span.unflagged:hover:before {
+            color: @color-list-flagged;
+        }
+
+        td.status span:hover:before {
+            color: @color-list-unread-status;
+        }
+    }
+
+    .layout-list& {
+        td > span.branch > div {
+            display: inline-block;
+        }
+
+        tr.unread td {
+            font-weight: bold;
+        }
+
+        tr.thread.expanded {
+            background-color: @color-list-thread-background;
+        }
+    }
+}
