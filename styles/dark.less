@@ -1,0 +1,62 @@
+/**
+ * Elastic Layouts dark styles
+ */
+
+html.dark-mode {
+    #layout-list {
+        #layout.layout-desktop & {
+            .iframe-wrapper {
+                border-top-color: @color-dark-border;
+            }
+        }
+    }
+
+    .listing {
+        > thead {
+            background-color: @color-dark-list-header-background;
+        }
+
+        thead th {
+            border-bottom-color: @color-dark-border;
+        }
+
+        thead th {
+            color: @color-dark-list-header;
+
+            a {
+                color: @color-dark-list-header;
+            }
+
+            &.sortedDESC,
+            &.sortedASC, {
+                > a:after {
+                    color: @color-dark-list-header-icon;
+                }
+            }
+        }
+    }
+
+    .messagelist {
+        th {
+            &.flag,
+            &.attachment {
+                span:before {
+                    color: @color-dark-list-header !important;
+                }
+            }
+        }
+
+        td.priority span,
+        span.priority {
+            &.prio3:before {
+                color: @color-dark-list-priority-3;
+            }
+        }
+
+        .layout-list& {
+            tr.thread.expanded {
+                background-color: @color-dark-list-thread-background;
+            }
+        }
+    }
+}
