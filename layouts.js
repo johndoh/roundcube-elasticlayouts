@@ -321,16 +321,20 @@ UI.toggle_list_selection = UI_layouts.toggle_list_selection;
 rcmail.set_list_options_core = rcmail.set_list_options;
 rcmail.set_list_options = function(cols, sort_col, sort_order, threads, layout)
 {
-    layout = $('select[name="layout"]:visible').val();
+    var layout = $('select[name="layout"]:visible').val();
     rcmail.set_list_options_core(cols, sort_col, sort_order, threads, layout);
 };
 
 // Inject the layout option into the add_message_row function
 rcmail.add_message_row_core = rcmail.add_message_row;
-rcmail.add_message_row = function(uid, cols, flags, attop, layout = this.env.layout)
+rcmail.add_message_row = function(uid, cols, flags, attop)
 {
-    layout = UI_layouts.get_list_layout(layout);
-    rcmail.add_message_row_core(uid, cols, flags, attop, layout);
+    var layout = UI_layouts.get_list_layout(layout);
+
+    if (rcmail.env.msglist_layout != layout)
+        rcmail.msglist_setup(layout);
+
+    rcmail.add_message_row_core(uid, cols, flags, attop);
 
     if (layout == 'list' && $('#messagelist-fixedcopy').data('header-hidden')) {
         // once the message list has loaded add the fixed header
