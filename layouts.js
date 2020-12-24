@@ -329,17 +329,17 @@ rcmail.set_list_options = function(cols, sort_col, sort_order, threads, layout)
 rcmail.add_message_row_core = rcmail.add_message_row;
 rcmail.add_message_row = function(uid, cols, flags, attop)
 {
-    var layout = UI_layouts.get_list_layout(layout);
-
-    if (rcmail.env.msglist_layout != layout)
-        rcmail.msglist_setup(layout);
-
     rcmail.add_message_row_core(uid, cols, flags, attop);
 
-    if (layout == 'list' && $('#messagelist-fixedcopy').data('header-hidden')) {
+    if (rcmail.env.msglist_layout == 'list' && $('#messagelist-fixedcopy').data('header-hidden')) {
         // once the message list has loaded add the fixed header
         // short delay prevents headers from flickering
         $('#messagelist-fixedcopy').data('header-hidden', false);
         setTimeout(function() { $('#messagelist-fixedcopy').show(); }, 200);
     }
 };
+
+// Override list layout for list headers
+rcmail.addEventListener('msglist_layout', function(p) {
+    return UI_layouts.get_list_layout();
+});

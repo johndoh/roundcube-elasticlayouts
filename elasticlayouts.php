@@ -29,7 +29,7 @@ class elasticlayouts extends rcube_plugin
 {
     public $task = 'mail|settings';
     private $rcube;
-    private $dont_override = array();
+    private $dont_override = [];
 
     public function init()
     {
@@ -38,18 +38,18 @@ class elasticlayouts extends rcube_plugin
         // this plugin only works with Elastic skin
         if ($this->rcube->config->get('skin') == 'elastic') {
             // set supported layouts
-            $this->rcube->config->set('supported_layouts', array('widescreen', 'desktop', 'list'), true);
+            $this->rcube->config->set('supported_layouts', ['widescreen', 'desktop', 'list'], true);
             $this->add_texts('localization/');
 
             if ($this->rcube->task == 'mail' && $this->rcube->action == '') {
                 $this->rcube->output->add_label('elasticlayouts.columnoptionstitle');
                 $this->include_stylesheet('styles/styles.css');
 
-                $this->dont_override = $this->rcube->config->get('dont_override', array());
+                $this->dont_override = $this->rcube->config->get('dont_override', []);
 
-                $this->add_hook('template_object_messages', array($this, 'message_list'));
-                $this->add_hook('template_container', array($this, 'template_container'));
-                $this->add_hook('render_page', array($this, 'render_page'));
+                $this->add_hook('template_object_messages', [$this, 'message_list']);
+                $this->add_hook('template_container', [$this, 'template_container']);
+                $this->add_hook('render_page', [$this, 'render_page']);
             }
         }
     }
@@ -58,15 +58,16 @@ class elasticlayouts extends rcube_plugin
     {
         unset($attrib['content']);
 
-        $list_options = array(
+        $list_options = [
             'optionsmenuicon'  => !in_array('list_cols', $this->dont_override),
             'optionsmenuref'   => 'messagelistcolsmenu',
             'optionsmenulabel' => 'elasticlayouts.columnoptions',
-            'optionsmenuid'    => 'colmenulink'
-        );
+            'optionsmenuid'    => 'colmenulink',
+        ];
 
         // rebuild the message list template object with new params
-        $attrib['content'] = call_user_func('rcmail_message_list', $attrib + $list_options);
+        $task_handler = new rcmail_action_mail_index();
+        $attrib['content'] = $task_handler->message_list($attrib + $list_options);
 
         return $attrib;
     }
@@ -77,13 +78,13 @@ class elasticlayouts extends rcube_plugin
             // layout option in list menu
             $field_id = 'listoptions-layout';
 
-            $select = new html_select(array('name' => 'layout', 'id' => $field_id));
+            $select = new html_select(['name' => 'layout', 'id' => $field_id]);
             $select->add($this->rcube->gettext('layoutwidescreendesc'), 'widescreen');
             $select->add($this->rcube->gettext('layoutdesktopdesc'), 'desktop');
             $select->add($this->rcube->gettext('layoutlistdesc'), 'list');
 
             $select_div = html::div('col-sm-8', $select->show($this->rcube->config->get('layout', 'widescreen')));
-            $label = html::label(array('for' => $field_id, 'class' => 'col-form-label col-sm-4'), rcube::Q($this->rcube->gettext('layout')));
+            $label = html::label(['for' => $field_id, 'class' => 'col-form-label col-sm-4'], rcube::Q($this->rcube->gettext('layout')));
             $content = html::div('form-group row hidden-phone hidden-small', $label . $select_div);
 
             $attrib['content'] .= $content;
@@ -98,8 +99,8 @@ class elasticlayouts extends rcube_plugin
 
         if (!in_array('list_cols', $this->dont_override)) {
             // columns selection menu
-            $required_cols = array('threads', 'subject');
-            $cols = array(
+            $required_cols = ['threads', 'subject'];
+            $cols = [
                 'threads' => 'threads',
                 'subject' => 'subject',
                 'fromto' => 'fromto',
@@ -112,19 +113,19 @@ class elasticlayouts extends rcube_plugin
                 'status' => 'readstatus',
                 'attachment' => 'attachment',
                 'flag' => 'flag',
-                'priority' => 'priority'
-            );
+                'priority' => 'priority',
+            ];
 
-            $lis = array();
+            $lis = [];
             foreach ($cols as $name => $label) {
-                $props = array('type' => 'checkbox', 'id' => 'listmodechk-' . $name, 'name' => 'list_col[]', 'value' => $name);
+                $props = ['type' => 'checkbox', 'id' => 'listmodechk-' . $name, 'name' => 'list_col[]', 'value' => $name];
                 if (in_array($name, $required_cols)) {
                     $props['disabled'] = 'disabled';
                 }
 
                 $span = html::span(null, rcube::Q($this->rcube->gettext($label)));
                 $input = new html_checkbox($props);
-                $label = html::label(in_array($name, $required_cols) ? array('class' => 'disabled') : array(), $input->show() . ' ' . $span);
+                $label = html::label(in_array($name, $required_cols) ? ['class' => 'disabled'] : [], $input->show() . ' ' . $span);
 
                 $lis[] = html::tag('li', null, $label);
             }
@@ -138,12 +139,12 @@ class elasticlayouts extends rcube_plugin
 
             $row = html::div('row', $col1 . $col2);
 
-            $title = html::tag('h3', array('id' => 'aria-label-coloptions', 'class' => 'voice'), rcube::Q($this->gettext('arialabelmessagecoloptions')));
-            $html .= html::div(array('id' => 'coloptions-menu', 'class' => 'popupmenu propform', 'role' => 'dialo', 'aria-labelledby' => 'aria-label-coloptions'), $title . $row);
+            $title = html::tag('h3', ['id' => 'aria-label-coloptions', 'class' => 'voice'], rcube::Q($this->gettext('arialabelmessagecoloptions')));
+            $html .= html::div(['id' => 'coloptions-menu', 'class' => 'popupmenu propform', 'role' => 'dialo', 'aria-labelledby' => 'aria-label-coloptions'], $title . $row);
         }
 
         // list mode JS
-        $html .= html::script(array('src' => $this->api->url . 'elasticlayouts/layouts.js'));
+        $html .= html::script(['src' => $this->api->url . 'elasticlayouts/layouts.js']);
 
         $attrib['content'] = str_replace('</body>', $html . '</body>', $attrib['content']);
 
