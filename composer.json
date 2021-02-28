@@ -3,7 +3,7 @@
   "description": "Add support for desktop and list layouts to Elastic skin",
   "keywords": ["list","layout"],
   "homepage": "https://github.com/johndoh/roundcube-elasticlayouts/",
-  "license": "GPL-3.0",
+  "license": "GPL-3.0-or-later",
   "type": "roundcube-plugin",
   "version": "0.1",
   "authors": [
