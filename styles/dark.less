@@ -34,7 +34,7 @@ html.dark-mode {
         }
     }
 
-    .messagelist {
+    .messagelist.layout-list {
         th {
             &.flag,
             &.attachment {
@@ -44,6 +44,15 @@ html.dark-mode {
             }
         }
 
+        tr.deleted td,
+        tr.deleted td.subject > a,
+        tr.deleted td.subject span.subject a,
+        tr.deleted td.subject span.date,
+        tr.deleted td.subject span.fromto,
+        tr.deleted td.flags span span {
+            color: @color-dark-list-deleted !important;
+        }
+
         td.priority span,
         span.priority {
             &.prio3:before {
@@ -51,10 +60,8 @@ html.dark-mode {
             }
         }
 
-        .layout-list& {
-            tr.thread.expanded {
-                background-color: @color-dark-list-thread-background;
-            }
+        tr.thread.expanded {
+            background-color: @color-dark-list-thread-background;
         }
     }
 }

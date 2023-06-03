@@ -71,7 +71,7 @@ table.fixedcopy {
     float: left;
 }
 
-.messagelist {
+.messagelist.layout-list {
     th {
         border-left: 0;
         width: 2em;
@@ -131,10 +131,8 @@ table.fixedcopy {
     }
 
     td.subject {
-        .layout-list& {
-            width: auto;
-            display: table-cell;
-        }
+        width: auto;
+        display: table-cell;
     }
 
     tr.flagged td.subject > a {
@@ -148,9 +146,7 @@ table.fixedcopy {
 
     td.subject span.msgicon {
         &:before {
-            .layout-list& {
-                margin-top: .2rem;
-            }
+            margin-top: .2rem;
         }
 
         &.status:before {
@@ -169,10 +165,8 @@ table.fixedcopy {
                 margin: 0;
                 content: @fa-var-paperclip;
 
-                .layout-list& {
-                    height: auto;
-                    text-indent: 0;
-                }
+                height: auto;
+                text-indent: 0;
             }
             &.report:before {
                 .font-icon-regular(@fa-var-file-alt);
@@ -194,11 +188,8 @@ table.fixedcopy {
             &:extend(.font-icon-class);
             .font-icon-regular(@fa-var-flag);
             color: transparent;
-
-            .layout-list& {
-                height: auto;
-                text-indent: 0;
-            }
+            height: auto !important;
+            text-indent: 0;
         }
 
         &.flagged:before {
@@ -216,17 +207,18 @@ table.fixedcopy {
     span.status {
         &:before {
             &:extend(.font-icon-class);
-            .font-icon-regular(@fa-var-envelope-open);
-
-            .layout-list& {
-                height: auto;
-                text-indent: 0;
-            }
+            .font-icon-solid(@fa-var-envelope);
+            height: auto;
+            text-indent: 0;
         }
 
         &.unread:before {
-            .font-icon-solid(@fa-var-envelope);
             color: @color-list-unread-status !important;
+        }
+
+        &.deleted:before {
+            color: @color-list-icon !important;
+            .font-icon-solid(@fa-var-ban);
         }
     }
 
@@ -239,11 +231,8 @@ table.fixedcopy {
         &:before {
             &:extend(.font-icon-class);
             content: @fa-var-exclamation;
-
-            .layout-list& {
-                height: auto;
-                text-indent: 0;
-            }
+            height: auto;
+            text-indent: 0;
         }
 
         &.prio1:before {
@@ -272,35 +261,39 @@ table.fixedcopy {
         }
     }
 
-    tr:hover {
-        td.status span,
-        span.unflagged {
-            &:before {
+    tr:not(.deleted):hover {
+        span.attachment {
+            display: block !important;
+        }
+
+        td.status,
+        td.flag {
+            > span:before {
                 color: @color-list-icon;
                 cursor: pointer;
             }
         }
+    }
 
-        span.unflagged:hover:before {
-            color: @color-list-flagged;
+    tr.deleted:hover {
+        span.attachment {
+            display: block !important;
         }
 
-        td.status span:hover:before {
-            color: @color-list-unread-status;
+        td.status > span.deleted:before {
+            cursor: pointer;
         }
     }
 
-    .layout-list& {
-        td > span.branch > div {
-            display: inline-block;
-        }
+    td > span.branch > div {
+        display: inline-block;
+    }
 
-        tr.unread td {
-            font-weight: bold;
-        }
+    tr.unread td {
+        font-weight: bold;
+    }
 
-        tr.thread.expanded {
-            background-color: @color-list-thread-background;
-        }
+    tr.thread.expanded {
+        background-color: @color-list-thread-background;
     }
 }
