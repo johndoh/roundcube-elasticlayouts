@@ -116,6 +116,7 @@ function rcube_elastic_layouts_ui()
 
         if (!$('.messagelist').hasClass('layout-' + current_layout)) {
             $('.messagelist').removeClass('layout-widescreen layout-list').addClass('layout-' + current_layout);
+            $('.listing-hover-menu')[current_layout == 'widescreen' ? 'removeClass' : 'addClass']('hidden');
 
             if (p) {
                 // the user has changed layout mode, redraw the UI
